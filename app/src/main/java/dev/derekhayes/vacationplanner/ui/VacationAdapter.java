@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
@@ -47,7 +45,7 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
                         .putExtra("startDate", current.getStartDate())
                         .putExtra("endDate", current.getEndDate())
                         .putExtra("description", current.getDescription());
-                        context.startActivity(intent);
+                context.startActivity(intent);
             });
         }
     }

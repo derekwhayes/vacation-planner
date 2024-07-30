@@ -11,8 +11,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
@@ -22,7 +20,7 @@ import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class VacationListActivity extends AppCompatActivity {
 
-    private VacationRepository vacationRepository;
+    private VacationRepository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +34,33 @@ public class VacationListActivity extends AppCompatActivity {
         });
 
         // create sample data
-        vacationRepository = new VacationRepository(getApplication());
+        repo = new VacationRepository(getApplication());
 
         Vacation vacation = new Vacation("tropical", "tropicabana", "2024", "2025", "really fun time");
         try {
-            vacationRepository.addVacation(vacation);
+            repo.addVacation(vacation);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         vacation = new Vacation("midwestern", "midwestereiner", "2026", "2027", "really boring time");
         try {
-            vacationRepository.addVacation(vacation);
+            repo.addVacation(vacation);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         Excursion excursion = new Excursion("shit shoveling", "2025", "get knee deep in the manure trade", 2);
         try {
-            vacationRepository.addExcursion(excursion);
+            repo.addExcursion(excursion);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         // setup recycler list
         RecyclerView recyclerView = findViewById(R.id.vacation_recycler);
-        vacationRepository = new VacationRepository(getApplication());
+        repo = new VacationRepository(getApplication());
         List<Vacation> vacations;
         try {
-            vacations = vacationRepository.getVacations();
+            vacations = repo.getVacations();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

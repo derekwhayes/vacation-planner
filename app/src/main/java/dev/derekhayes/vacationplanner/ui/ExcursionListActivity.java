@@ -8,10 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
+import dev.derekhayes.vacationplanner.database.VacationRepository;
+import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class ExcursionListActivity extends AppCompatActivity {
+
+    VacationRepository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,20 @@ public class ExcursionListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // setup recycle list
+        RecyclerView recyclerView = findViewById(R.id.excursion_recycler);
+        repo = new VacationRepository(getApplication());
+        List<Excursion> excursions;
+        try {
+            excursions = repo.getExcursions();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
+        recyclerView.setAdapter(excursionAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        excursionAdapter.setExcursions(excursions);
 
     }
 
