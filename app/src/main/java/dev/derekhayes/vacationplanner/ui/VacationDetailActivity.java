@@ -1,6 +1,9 @@
 package dev.derekhayes.vacationplanner.ui;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,5 +25,24 @@ public class VacationDetailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_vacation_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit) {
+            //TODO:Edit vacation
+            return true;
+        }
+        else if (item.getItemId() == R.id.delete) {
+            //TODO:Delete vacation
+            return true;
+        }
+        return false;
     }
 }

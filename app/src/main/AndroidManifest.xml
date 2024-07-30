@@ -15,14 +15,17 @@
         <activity
             android:name=".ui.ExcursionDetailActivity"
             android:label="Excursion Details"
+            android:parentActivityName=".ui.ExcursionListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ExcursionListActivity"
             android:label="Excursions"
+            android:parentActivityName=".ui.VacationDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.VacationDetailActivity"
             android:label="Vacation Details"
+            android:parentActivityName=".ui.VacationListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.VacationListActivity"
