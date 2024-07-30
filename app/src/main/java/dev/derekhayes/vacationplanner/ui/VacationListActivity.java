@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +57,21 @@ public class VacationListActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
+        // setup recycler list
+        RecyclerView recyclerView = findViewById(R.id.vacation_recycler);
+        vacationRepository = new VacationRepository(getApplication());
+        List<Vacation> vacations;
+        try {
+            vacations = vacationRepository.getVacations();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setVacations(vacations);
+
+        // add button listener
         findViewById(R.id.add_vacation_button).setOnClickListener(view -> {
             try {
                 addVacation();
