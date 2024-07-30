@@ -33,10 +33,40 @@ public class VacationListActivity extends AppCompatActivity {
             return insets;
         });
 
-        findViewById(R.id.add_vacation_button).setOnClickListener(view -> addVacation());
+        // create sample data
+        vacationRepository = new VacationRepository(getApplication());
+
+        Vacation vacation = new Vacation("tropical", "tropicabana", "2024", "2025", "really fun time");
+        try {
+            vacationRepository.addVacation(vacation);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        vacation = new Vacation("midwestern", "midwestereiner", "2026", "2027", "really boring time");
+        try {
+            vacationRepository.addVacation(vacation);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Excursion excursion = new Excursion("shit shoveling", "2025", "get knee deep in the manure trade", 2);
+        try {
+            vacationRepository.addExcursion(excursion);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        findViewById(R.id.add_vacation_button).setOnClickListener(view -> {
+            try {
+                addVacation();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    private void addVacation() {
-        startActivity(new Intent(this, VacationDetailActivity.class));
+    private void addVacation() throws InterruptedException {
+        Intent intent = new Intent(this, VacationDetailActivity.class);
+        intent.putExtra("isNewVacation", true);
+        startActivity(intent);
     }
 }

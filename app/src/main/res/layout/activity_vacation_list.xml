@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.VacationListActivity">
 
+    <ScrollView
+        android:id="@+id/vacation_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_vacation_button"
         android:layout_width="wrap_content"
