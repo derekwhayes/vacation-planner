@@ -1,5 +1,6 @@
 package dev.derekhayes.vacationplanner.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,8 @@ public class VacationDetailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
     }
 
     @Override
@@ -44,5 +47,9 @@ public class VacationDetailActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public void addExcursion() {
+        startActivity(new Intent(this, ExcursionListActivity.class));
     }
 }
