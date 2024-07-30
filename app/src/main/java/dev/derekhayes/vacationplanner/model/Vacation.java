@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,24 +20,20 @@ public class Vacation {
     private String accommodationName;
 
     @ColumnInfo(name = "start_date")
-    private Date startDate;
+    private String startDate;
 
     @ColumnInfo(name = "end_date")
-    private Date endDate;
+    private String endDate;
 
     @ColumnInfo(name = "description")
     private String description;
 
-    @ColumnInfo(name = "excursions")
-    private List<Excursion> excursions;
-
-    public Vacation(String name, String accommodationName, Date startDate, Date endDate, String description, List<Excursion> excursions) {
+    public Vacation(String name, String accommodationName, String startDate, String endDate, String description) {
         this.name = name;
         this.accommodationName = accommodationName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.excursions = excursions;
     }
 
     public long getId() {
@@ -63,19 +60,19 @@ public class Vacation {
         this.accommodationName = accommodationName;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -85,13 +82,5 @@ public class Vacation {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Excursion> getExcursions() {
-        return excursions;
-    }
-
-    public void setExcursions(List<Excursion> excursions) {
-        this.excursions = excursions;
     }
 }

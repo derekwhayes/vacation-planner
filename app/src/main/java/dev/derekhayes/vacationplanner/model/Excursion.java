@@ -1,17 +1,18 @@
 package dev.derekhayes.vacationplanner.model;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-@Entity(tableName = "excursions", foreignKeys = {@ForeignKey(entity = Vacation.class,
-    parentColumns = "id",
-    childColumns = "vacation_id",
-    onDelete = ForeignKey.CASCADE)
-})
+@Entity(tableName = "excursions", foreignKeys = @ForeignKey(
+        entity = Vacation.class,
+        parentColumns = "id",
+        childColumns = "vacation_id",
+        onDelete = CASCADE)
+)
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)
@@ -19,14 +20,14 @@ public class Excursion {
 
     private String name;
 
-    private Date date;
+    private String date;
 
     private String description;
 
     @ColumnInfo(name = "vacation_id")
     private long vacationId;
 
-    public Excursion(String name, Date date, String description, long vacationId) {
+    public Excursion(String name, String date, String description, long vacationId) {
         this.name = name;
         this.date = date;
         this.description = description;
@@ -49,11 +50,11 @@ public class Excursion {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
