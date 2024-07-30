@@ -13,7 +13,24 @@
         android:theme="@style/Theme.VacationPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.ExcursionDetailActivity"
+            android:label="Excursion Details"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ExcursionListActivity"
+            android:label="Excursions"
+            android:exported="false" />
+        <activity
+            android:name=".ui.VacationDetailActivity"
+            android:label="Vacation Details"
+            android:exported="false" />
+        <activity
+            android:name=".ui.VacationListActivity"
+            android:label="Vacations"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="Vacation Planner"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
