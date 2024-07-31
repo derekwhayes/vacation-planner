@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Vacation Planner</string>
+    <string name="vacation_name">%s</string>
+    <string name="vacation_dates">From %s to %s</string>
 </resources>

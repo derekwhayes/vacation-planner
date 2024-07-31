@@ -4,16 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
+import dev.derekhayes.vacationplanner.database.VacationRepository;
+import dev.derekhayes.vacationplanner.model.Excursion;
 
 public class VacationDetailActivity extends AppCompatActivity {
+
+    String name;
+    String description;
+    String startDate;
+    String endDate;
+    String accommodations;
+    long id;
+    TextView nameTV;
+    TextView descriptionTV;
+    TextView datesTV;
+    TextView accommodationsTV;
+
+    VacationRepository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +47,37 @@ public class VacationDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
+
+        nameTV = findViewById(R.id.vacation_name_text);
+        descriptionTV = findViewById(R.id.vacation_description_text);
+        datesTV = findViewById(R.id.vacation_dates_text);
+        accommodationsTV = findViewById(R.id.vacation_accommodations_text);
+
+        id = getIntent().getLongExtra("id", -1);
+        name = getIntent().getStringExtra("name");
+        description = getIntent().getStringExtra("description");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
+        accommodations = getIntent().getStringExtra("accommodations");
+
+        nameTV.setText(name);
+        descriptionTV.setText(description);
+        datesTV.setText(getResources().getString(R.string.vacation_dates, startDate, endDate));
+        accommodationsTV.setText(accommodations);
+
+        // setup recycle list
+        RecyclerView recyclerView = findViewById(R.id.vacation_excursion_recycler);
+        repo = new VacationRepository(getApplication());
+        List<Excursion> excursions;
+        try {
+            excursions = repo.getAssociatedExcursions(id);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final VacationExcursionsAdapter vacationExcursionsAdapter = new VacationExcursionsAdapter(this);
+        recyclerView.setAdapter(vacationExcursionsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationExcursionsAdapter.setExcursions(excursions);
     }
 
     @Override
