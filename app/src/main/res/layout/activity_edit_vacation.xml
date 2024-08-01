@@ -57,7 +57,7 @@
         android:id="@+id/vacation_end_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ends Date"
+        android:text="End Date"
         android:textSize="16sp"
         android:layout_marginTop="20dp"/>
 
