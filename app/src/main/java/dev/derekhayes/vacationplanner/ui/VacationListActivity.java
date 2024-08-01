@@ -20,8 +20,6 @@ import dev.derekhayes.vacationplanner.ui.adapter.VacationAdapter;
 
 public class VacationListActivity extends AppCompatActivity {
 
-    private VacationRepository repo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,41 +31,8 @@ public class VacationListActivity extends AppCompatActivity {
             return insets;
         });
 
-        // create sample data
-//        repo = new VacationRepository(getApplication());
-//
-//        Vacation vacation = new Vacation("tropical", "tropicabana", "2024", "2025", "really fun time");
-//        try {
-//            repo.addVacation(vacation);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        vacation = new Vacation("midwestern", "midwestereiner", "2026", "2027", "really boring time");
-//        try {
-//            repo.addVacation(vacation);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        Excursion excursion = new Excursion("shit shoveling", "2025", "get knee deep in the manure trade", 2);
-//        try {
-//            repo.addExcursion(excursion);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
         // setup recycler list
-        RecyclerView recyclerView = findViewById(R.id.vacation_recycler);
-        repo = new VacationRepository(getApplication());
-        List<Vacation> vacations;
-        try {
-            vacations = repo.getVacations();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        final VacationAdapter vacationAdapter = new VacationAdapter(this);
-        recyclerView.setAdapter(vacationAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        vacationAdapter.setVacations(vacations);
+        setRecyclerView();
 
         // add button listener
         findViewById(R.id.add_vacation_button).setOnClickListener(view -> {
@@ -82,5 +47,27 @@ public class VacationListActivity extends AppCompatActivity {
     private void addVacation() throws InterruptedException {
         Intent intent = new Intent(this, EditVacationActivity.class);
         startActivity(intent);
+    }
+
+    // update the vacation list when backing up
+    @Override
+    public void onResume() {
+        super.onResume();
+        setRecyclerView();
+    }
+
+    private void setRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.vacation_recycler);
+        VacationRepository repo = new VacationRepository(getApplication());
+        List<Vacation> vacations;
+        try {
+            vacations = repo.getVacations();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        VacationAdapter vacationAdapter = new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setVacations(vacations);
     }
 }
