@@ -15,8 +15,8 @@ import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
-import dev.derekhayes.vacationplanner.model.Excursion;
 import dev.derekhayes.vacationplanner.model.Vacation;
+import dev.derekhayes.vacationplanner.ui.adapter.VacationAdapter;
 
 public class VacationListActivity extends AppCompatActivity {
 
@@ -34,26 +34,26 @@ public class VacationListActivity extends AppCompatActivity {
         });
 
         // create sample data
-        repo = new VacationRepository(getApplication());
-
-        Vacation vacation = new Vacation("tropical", "tropicabana", "2024", "2025", "really fun time");
-        try {
-            repo.addVacation(vacation);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        vacation = new Vacation("midwestern", "midwestereiner", "2026", "2027", "really boring time");
-        try {
-            repo.addVacation(vacation);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        Excursion excursion = new Excursion("shit shoveling", "2025", "get knee deep in the manure trade", 2);
-        try {
-            repo.addExcursion(excursion);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        repo = new VacationRepository(getApplication());
+//
+//        Vacation vacation = new Vacation("tropical", "tropicabana", "2024", "2025", "really fun time");
+//        try {
+//            repo.addVacation(vacation);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        vacation = new Vacation("midwestern", "midwestereiner", "2026", "2027", "really boring time");
+//        try {
+//            repo.addVacation(vacation);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Excursion excursion = new Excursion("shit shoveling", "2025", "get knee deep in the manure trade", 2);
+//        try {
+//            repo.addExcursion(excursion);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
         // setup recycler list
         RecyclerView recyclerView = findViewById(R.id.vacation_recycler);

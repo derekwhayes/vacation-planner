@@ -1,4 +1,4 @@
-package dev.derekhayes.vacationplanner.ui;
+package dev.derekhayes.vacationplanner.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,27 +14,27 @@ import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.model.Excursion;
-import dev.derekhayes.vacationplanner.model.Vacation;
+import dev.derekhayes.vacationplanner.ui.ExcursionDetailActivity;
 
-public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.ExcursionViewHolder> {
+public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcursionsAdapter.VacationExcursionsViewHolder> {
 
     private List<Excursion> excursions;
     private final Context context;
     private final LayoutInflater inflater;
 
-    public ExcursionAdapter(Context context) {
+    public VacationExcursionsAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.context = context;
     }
 
-    public class ExcursionViewHolder extends RecyclerView.ViewHolder {
+    public class VacationExcursionsViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView excursionItemView;
+        private final TextView vacationExcursionsItemView;
 
-        public ExcursionViewHolder(@NonNull View itemView) {
+        public VacationExcursionsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            excursionItemView = itemView.findViewById(R.id.excursion_list_item_text);
+            vacationExcursionsItemView = itemView.findViewById(R.id.excursion_list_item_text);
             itemView.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 final Excursion current = excursions.get(position);
@@ -51,22 +51,22 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
 
     @NonNull
     @Override
-    public ExcursionAdapter.ExcursionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VacationExcursionsAdapter.VacationExcursionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = inflater.inflate(R.layout.excursion_list_item, parent, false);
 
-        return new ExcursionAdapter.ExcursionViewHolder(itemView);
+        return new VacationExcursionsAdapter.VacationExcursionsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExcursionAdapter.ExcursionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VacationExcursionsAdapter.VacationExcursionsViewHolder holder, int position) {
         if (excursions != null) {
             Excursion current = excursions.get(position);
             String name = current.getName();
-            holder.excursionItemView.setText(name);
+            holder.vacationExcursionsItemView.setText(name);
         }
         else {
-            holder.excursionItemView.setText("No excursions yet!");
+            holder.vacationExcursionsItemView.setText("No excursions yet!");
         }
     }
 
@@ -85,4 +85,3 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         notifyDataSetChanged();
     }
 }
-

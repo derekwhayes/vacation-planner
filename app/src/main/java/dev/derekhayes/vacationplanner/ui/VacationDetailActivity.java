@@ -19,6 +19,7 @@ import java.util.List;
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.ui.adapter.VacationExcursionsAdapter;
 
 public class VacationDetailActivity extends AppCompatActivity {
 

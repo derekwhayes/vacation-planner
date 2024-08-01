@@ -1,8 +1,7 @@
-package dev.derekhayes.vacationplanner.ui;
+package dev.derekhayes.vacationplanner.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.model.Vacation;
+import dev.derekhayes.vacationplanner.ui.VacationDetailActivity;
 
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
 
