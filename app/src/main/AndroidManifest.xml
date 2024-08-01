@@ -13,28 +13,33 @@
         android:theme="@style/Theme.VacationPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ExcursionDetailActivity"
-            android:label="Excursion Details"
-            android:parentActivityName=".ui.ExcursionListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ExcursionListActivity"
-            android:label="Excursions"
-            android:parentActivityName=".ui.VacationDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.VacationDetailActivity"
-            android:label="Vacation Details"
+            android:name=".ui.EditVacationActivity"
+            android:label="Edit Vacation"
             android:parentActivityName=".ui.VacationListActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.ExcursionDetailActivity"
+            android:exported="false"
+            android:label="Excursion Details"
+            android:parentActivityName=".ui.ExcursionListActivity" />
+        <activity
+            android:name=".ui.ExcursionListActivity"
+            android:exported="false"
+            android:label="Excursions"
+            android:parentActivityName=".ui.VacationDetailActivity" />
+        <activity
+            android:name=".ui.VacationDetailActivity"
+            android:exported="false"
+            android:label="Vacation Details"
+            android:parentActivityName=".ui.VacationListActivity" />
+        <activity
             android:name=".ui.VacationListActivity"
-            android:label="Vacations"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Vacations" />
         <activity
             android:name=".ui.MainActivity"
-            android:label="Vacation Planner"
             android:exported="true"
+            android:label="Vacation Planner"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

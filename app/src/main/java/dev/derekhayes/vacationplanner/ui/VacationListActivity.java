@@ -80,8 +80,7 @@ public class VacationListActivity extends AppCompatActivity {
     }
 
     private void addVacation() throws InterruptedException {
-        Intent intent = new Intent(this, VacationDetailActivity.class);
-        intent.putExtra("isNewVacation", true);
+        Intent intent = new Intent(this, EditVacationActivity.class);
         startActivity(intent);
     }
 }
