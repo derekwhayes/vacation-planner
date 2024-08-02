@@ -2,11 +2,13 @@ package dev.derekhayes.vacationplanner.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -90,12 +92,25 @@ public class VacationDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.edit) {
-            //TODO:Edit vacation
+            Intent intent = new Intent(this, EditVacationActivity.class);
+            intent.putExtra("vacationId", id);
+            Log.d("TAG", "id: " + id);
+            startActivity(intent);
             return true;
         }
         else if (item.getItemId() == R.id.delete) {
-            //TODO:Delete vacation
+            try {
+                repo.deleteVacation(repo.getVacation(id));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> finish()).setNegativeButton("Cancel", null);
+
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
             return true;
+
         }
         return false;
     }

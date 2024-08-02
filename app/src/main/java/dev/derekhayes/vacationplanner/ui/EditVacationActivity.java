@@ -2,6 +2,7 @@ package dev.derekhayes.vacationplanner.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,7 +31,11 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     private String endDate;
     private String accommodations;
     private VacationRepository repo;
-    private EditText editText;
+    private EditText nameTV;
+    private EditText descriptionTV;
+    private EditText accommodationsTV;
+    private Button startDateBtn;
+    private Button endDateBtn;
     private boolean isStartDate;
 
     @Override
@@ -45,6 +50,27 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         });
 
         repo = new VacationRepository(getApplication());
+
+        // set views
+        nameTV = findViewById(R.id.edit_vacation_name);
+        accommodationsTV = findViewById(R.id.edit_vacation_accommodations);
+        descriptionTV = findViewById(R.id.edit_vacation_description);
+        startDateBtn = findViewById(R.id.vacation_start_date_button);
+        endDateBtn = findViewById(R.id.vacation_end_date_button);
+
+        // check if editing existing vacation and populate views accordingly
+        long vacationId = getIntent().getLongExtra("vacationId", -1);
+        Log.d("TAG", "vacationId: " + vacationId);
+        if (vacationId != -1) {
+
+            try {
+                populateViews(vacationId);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
 
         findViewById(R.id.vacation_start_date_button).setOnClickListener(view -> {
             isStartDate = true;
@@ -61,6 +87,15 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         });
     }
 
+    private void populateViews(long id) throws InterruptedException {
+        Vacation vacation = repo.getVacation(id);
+        nameTV.setText(vacation.getName());
+        descriptionTV.setText(vacation.getDescription());
+        accommodationsTV.setText(vacation.getAccommodationName());
+        startDateBtn.setText(vacation.getStartDate());
+        endDateBtn.setText(vacation.getEndDate());
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_details_menu, menu);
@@ -71,12 +106,10 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
             // Collect info from edit fields
-            editText = findViewById(R.id.edit_vacation_name);
-            name = editText.getText().toString();
-            editText = findViewById(R.id.edit_vacation_accommodations);
-            accommodations = editText.getText().toString();
-            editText = findViewById(R.id.edit_vacation_description);
-            description = editText.getText().toString();
+
+            name = nameTV.getText().toString();
+            accommodations = accommodationsTV.getText().toString();
+            description = descriptionTV.getText().toString();
 
             Vacation vacation = new Vacation(name, accommodations, startDate, endDate, description);
 
@@ -92,7 +125,14 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         }
         else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> finish()).setNegativeButton("Cancel", null);
+            builder.setMessage("Are you sure?")
+                    .setPositiveButton("Ok", (dialogInterface, i) -> {
+                        Intent intent = new Intent(this, VacationListActivity.class)
+                                // returns us to the main activity if vacation is deleted and we press back
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", null);
 
             AlertDialog mDialog = builder.create();
             mDialog.show();
