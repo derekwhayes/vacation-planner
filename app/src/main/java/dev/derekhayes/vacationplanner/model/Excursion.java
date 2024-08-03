@@ -7,12 +7,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "excursions", foreignKeys = @ForeignKey(
-        entity = Vacation.class,
-        parentColumns = "id",
-        childColumns = "vacation_id",
-        onDelete = CASCADE)
-)
+@Entity(tableName = "excursions")
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)
@@ -24,14 +19,10 @@ public class Excursion {
 
     private String description;
 
-    @ColumnInfo(name = "vacation_id")
-    private long vacationId;
-
-    public Excursion(String name, String date, String description, long vacationId) {
+    public Excursion(String name, String date, String description) {
         this.name = name;
         this.date = date;
         this.description = description;
-        this.vacationId = vacationId;
     }
 
     public long getId() {
@@ -64,13 +55,5 @@ public class Excursion {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getVacationId() {
-        return vacationId;
-    }
-
-    public void setVacationId(long vacationId) {
-        this.vacationId = vacationId;
     }
 }

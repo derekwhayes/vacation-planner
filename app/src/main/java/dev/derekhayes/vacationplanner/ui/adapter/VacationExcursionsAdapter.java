@@ -2,6 +2,7 @@ package dev.derekhayes.vacationplanner.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,14 @@ public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcu
             itemView.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 final Excursion current = excursions.get(position);
-                Intent intent = new Intent(context, ExcursionDetailActivity.class)
-                        .putExtra("id", current.getId())
-                        .putExtra("name", current.getName())
-                        .putExtra("date", current.getDate())
-                        .putExtra("description", current.getDescription())
-                        .putExtra("vacationId", current.getVacationId());
-                context.startActivity(intent);
+                if (current != null) {
+                    Intent intent = new Intent(context, ExcursionDetailActivity.class)
+                            .putExtra("id", current.getId())
+                            .putExtra("name", current.getName())
+                            .putExtra("date", current.getDate())
+                            .putExtra("description", current.getDescription());
+                    context.startActivity(intent);
+                }
             });
         }
     }
@@ -60,13 +62,18 @@ public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcu
 
     @Override
     public void onBindViewHolder(@NonNull VacationExcursionsAdapter.VacationExcursionsViewHolder holder, int position) {
-        if (excursions != null) {
+        if (excursions.get(0) != null) {
+            Log.d("MYTAG", "excursions: " + excursions);
+            Log.d("MYTAG", "position: " + position);
             Excursion current = excursions.get(position);
+            Log.d("MYTAG", "current: " + current);
+
             String name = current.getName();
             holder.vacationExcursionsItemView.setText(name);
+
         }
         else {
-            holder.vacationExcursionsItemView.setText("No excursions yet!");
+             holder.vacationExcursionsItemView.setText("No excursions yet!");
         }
     }
 

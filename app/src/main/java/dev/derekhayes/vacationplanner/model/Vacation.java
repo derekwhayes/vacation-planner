@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,12 +29,16 @@ public class Vacation {
     @ColumnInfo(name = "description")
     private String description;
 
+    @ColumnInfo(name = "excursion_ids")
+    private List<String> excursionIds;
+
     public Vacation(String name, String accommodationName, String startDate, String endDate, String description) {
         this.name = name;
         this.accommodationName = accommodationName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+        this.excursionIds = new ArrayList<>();
     }
 
     public long getId() {
@@ -82,5 +87,13 @@ public class Vacation {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getExcursionIds() {
+        return excursionIds;
+    }
+
+    public void setExcursionIds(List<String> excursionIds) {
+        this.excursionIds = excursionIds;
     }
 }

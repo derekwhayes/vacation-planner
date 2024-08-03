@@ -156,18 +156,4 @@ public class VacationRepository {
 
         return excursion;
     }
-
-    public List<Excursion> getAssociatedExcursions(long vacationId) throws InterruptedException {
-        databaseExecutor.execute(() -> {
-            excursions = excursionDao.getAssociatedExcursions(vacationId);
-        });
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        return excursions;
-    }
 }

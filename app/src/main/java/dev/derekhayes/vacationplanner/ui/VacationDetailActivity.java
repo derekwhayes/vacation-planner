@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
@@ -31,6 +32,7 @@ public class VacationDetailActivity extends AppCompatActivity {
     String startDate;
     String endDate;
     String accommodations;
+    List<String> excursionIds = new ArrayList<>();
     long id;
     TextView nameTV;
     TextView descriptionTV;
@@ -50,6 +52,8 @@ public class VacationDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        repo = new VacationRepository(getApplication());
+
         // find views
         findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
 
@@ -65,8 +69,19 @@ public class VacationDetailActivity extends AppCompatActivity {
         startDate = getIntent().getStringExtra("startDate");
         endDate = getIntent().getStringExtra("endDate");
         accommodations = getIntent().getStringExtra("accommodations");
+        if (id != -1) {
+            try {
+                excursionIds = repo.getVacation(id).getExcursionIds();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-        populateVacation();
+        try {
+            populateVacation();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -81,14 +96,19 @@ public class VacationDetailActivity extends AppCompatActivity {
             accommodations = vacation.getAccommodationName();
             startDate = vacation.getStartDate();
             endDate = vacation.getEndDate();
+            excursionIds = vacation.getExcursionIds();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        populateVacation();
+        try {
+            populateVacation();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void populateVacation() {
+    private void populateVacation() throws InterruptedException {
 
         nameTV.setText(name);
         descriptionTV.setText(description);
@@ -97,17 +117,19 @@ public class VacationDetailActivity extends AppCompatActivity {
 
         // setup recycle list
         RecyclerView recyclerView = findViewById(R.id.vacation_excursion_recycler);
-        repo = new VacationRepository(getApplication());
-        List<Excursion> excursions;
-        try {
-            excursions = repo.getAssociatedExcursions(id);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         final VacationExcursionsAdapter vacationExcursionsAdapter = new VacationExcursionsAdapter(this);
         recyclerView.setAdapter(vacationExcursionsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        vacationExcursionsAdapter.setExcursions(excursions);
+
+        // convert excursion id list to excursion list if there are excursions
+        List<Excursion> excursions = new ArrayList<>();
+        if (excursionIds != null) {
+
+            for (int i = 0; i < excursionIds.size(); i++) {
+                excursions.add(repo.getExcursion(i));
+            }
+            vacationExcursionsAdapter.setExcursions(excursions);
+        }
     }
 
     @Override
