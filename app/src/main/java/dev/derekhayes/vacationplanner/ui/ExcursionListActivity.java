@@ -51,9 +51,27 @@ public class ExcursionListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        RecyclerView recyclerView = findViewById(R.id.excursion_recycler);
+        repo = new VacationRepository(getApplication());
+        List<Excursion> excursions;
+        try {
+            excursions = repo.getExcursions();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
+        recyclerView.setAdapter(excursionAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        excursionAdapter.setExcursions(excursions);
+    }
 
 
     private void addExcursion() {
-        startActivity(new Intent(this, ExcursionDetailActivity.class));
+        startActivity(new Intent(this, EditExcursionActivity.class));
     }
 }
