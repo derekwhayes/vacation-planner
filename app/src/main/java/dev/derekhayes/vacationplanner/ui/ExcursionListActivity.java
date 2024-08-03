@@ -33,6 +33,8 @@ public class ExcursionListActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
+
         // setup recycle list
         RecyclerView recyclerView = findViewById(R.id.excursion_recycler);
         repo = new VacationRepository(getApplication());
