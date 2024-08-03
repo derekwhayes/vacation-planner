@@ -21,6 +21,7 @@ import java.util.List;
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.adapter.VacationExcursionsAdapter;
 
 public class VacationDetailActivity extends AppCompatActivity {
@@ -49,6 +50,7 @@ public class VacationDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        // find views
         findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
 
         nameTV = findViewById(R.id.vacation_name_text);
@@ -56,12 +58,37 @@ public class VacationDetailActivity extends AppCompatActivity {
         datesTV = findViewById(R.id.vacation_dates_text);
         accommodationsTV = findViewById(R.id.vacation_accommodations_text);
 
+        // get vacation info from vacation list
         id = getIntent().getLongExtra("id", -1);
         name = getIntent().getStringExtra("name");
         description = getIntent().getStringExtra("description");
         startDate = getIntent().getStringExtra("startDate");
         endDate = getIntent().getStringExtra("endDate");
         accommodations = getIntent().getStringExtra("accommodations");
+
+        populateVacation();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // set info from edited vacation
+        try {
+            Vacation vacation = repo.getVacation(id);
+            name = vacation.getName();
+            description = vacation.getDescription();
+            accommodations = vacation.getAccommodationName();
+            startDate = vacation.getStartDate();
+            endDate = vacation.getEndDate();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        populateVacation();
+    }
+
+    private void populateVacation() {
 
         nameTV.setText(name);
         descriptionTV.setText(description);

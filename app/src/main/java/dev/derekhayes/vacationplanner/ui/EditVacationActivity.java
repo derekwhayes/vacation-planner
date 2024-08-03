@@ -37,6 +37,8 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     private Button startDateBtn;
     private Button endDateBtn;
     private boolean isStartDate;
+    private boolean isAddNewVacation = true;
+    private Vacation vacation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,8 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         long vacationId = getIntent().getLongExtra("vacationId", -1);
         Log.d("TAG", "vacationId: " + vacationId);
         if (vacationId != -1) {
-
+            // set if vacation is edit or new
+            isAddNewVacation = false;
             try {
                 populateViews(vacationId);
             } catch (InterruptedException e) {
@@ -88,7 +91,7 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     }
 
     private void populateViews(long id) throws InterruptedException {
-        Vacation vacation = repo.getVacation(id);
+        vacation = repo.getVacation(id);
         nameTV.setText(vacation.getName());
         descriptionTV.setText(vacation.getDescription());
         accommodationsTV.setText(vacation.getAccommodationName());
@@ -106,17 +109,32 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
             // Collect info from edit fields
-
             name = nameTV.getText().toString();
             accommodations = accommodationsTV.getText().toString();
             description = descriptionTV.getText().toString();
+            startDate = startDateBtn.getText().toString();
+            endDate = endDateBtn.getText().toString();
 
-            Vacation vacation = new Vacation(name, accommodations, startDate, endDate, description);
-
-            try {
-                repo.addVacation(vacation);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            if (isAddNewVacation) {
+                vacation = new Vacation(name, accommodations, startDate, endDate, description);
+                try {
+                    repo.addVacation(vacation);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                vacation.setName(name);
+                vacation.setAccommodationName(accommodations);
+                vacation.setDescription(description);
+                vacation.setStartDate(startDate);
+                vacation.setEndDate(endDate);
+                try {
+                    repo.updateVacation(vacation);
+                }
+                catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             finish();
@@ -127,6 +145,13 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure?")
                     .setPositiveButton("Ok", (dialogInterface, i) -> {
+                        if (vacation != null) {
+                            try {
+                                repo.deleteVacation(vacation);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                         Intent intent = new Intent(this, VacationListActivity.class)
                                 // returns us to the main activity if vacation is deleted and we press back
                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
