@@ -19,10 +19,13 @@ public class Excursion {
 
     private String description;
 
-    public Excursion(String name, String date, String description) {
+    private long vacationId;
+
+    public Excursion(String name, String date, String description, long vacationId) {
         this.name = name;
         this.date = date;
         this.description = description;
+        this.vacationId = vacationId;
     }
 
     public long getId() {
@@ -55,5 +58,13 @@ public class Excursion {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getVacationId() {
+        return vacationId;
+    }
+
+    public void setVacationId(long vacationId) {
+        this.vacationId = vacationId;
     }
 }

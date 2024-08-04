@@ -156,4 +156,19 @@ public class VacationRepository {
 
         return excursion;
     }
+
+    public List<Excursion> getVacationExcursions(long vacationId) throws InterruptedException {
+        databaseExecutor.execute(() -> {
+            excursions = excursionDao.getVacationExcursions(vacationId);
+        });
+
+        try {
+            Thread.sleep(100);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return excursions;
+    }
 }

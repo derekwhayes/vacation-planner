@@ -30,6 +30,7 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
     private Button dateBtn;
     private boolean isAddNewExcursion = true;
     private Excursion excursion;
+    private long vacationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         });
 
         repo = new VacationRepository(getApplication());
+        vacationId = getIntent().getLongExtra("vacationId", -1);
 
         // set views
         nameTV = findViewById(R.id.edit_excursion_name);
@@ -91,7 +93,7 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
             date = dateBtn.getText().toString();
 
             if (isAddNewExcursion) {
-                excursion = new Excursion(name, date, description);
+                excursion = new Excursion(name, date, description, vacationId);
                 try {
                     repo.addExcursion(excursion);
                 } catch (InterruptedException e) {
@@ -123,9 +125,7 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
                                 throw new RuntimeException(e);
                             }
                         }
-                        Intent intent = new Intent(this, ExcursionListActivity.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        finish();
                     })
                     .setNegativeButton("Cancel", null);
 

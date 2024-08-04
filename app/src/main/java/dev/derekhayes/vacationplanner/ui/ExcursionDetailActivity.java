@@ -59,7 +59,6 @@ public class ExcursionDetailActivity extends AppCompatActivity {
         description = getIntent().getStringExtra("description");
         date = getIntent().getStringExtra("date");
         vacationId = getIntent().getLongExtra("vacationId", -1);
-        Log.d("MYTAG", "vacationId in excursionDetail: " + vacationId);
 
         try {
             populateExcursion();
@@ -114,10 +113,6 @@ public class ExcursionDetailActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            // get the excursionId list, add new excursion, send list back to vacation
-            List<String> excursionIds = vacation.getExcursionIds();
-            excursionIds.add(String.valueOf(id));
-            vacation.setExcursionIds(excursionIds);
         }
         else if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditExcursionActivity.class);

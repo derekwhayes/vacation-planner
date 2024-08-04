@@ -9,7 +9,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 import dev.derekhayes.vacationplanner.R;
+import dev.derekhayes.vacationplanner.database.VacationRepository;
+import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.start_button).setOnClickListener(view -> onClickGetStarted());
+
     }
 
     public void onClickGetStarted() {

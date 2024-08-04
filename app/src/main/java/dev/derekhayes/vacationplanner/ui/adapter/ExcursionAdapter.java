@@ -18,19 +18,16 @@ import dev.derekhayes.vacationplanner.model.Excursion;
 import dev.derekhayes.vacationplanner.ui.ExcursionDetailActivity;
 
 
-
 public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.ExcursionViewHolder> {
 
     private List<Excursion> excursions;
     private final Context context;
     private final LayoutInflater inflater;
-    private long vacationId;
 
 
     public ExcursionAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.context = context;
-
     }
 
     public class ExcursionViewHolder extends RecyclerView.ViewHolder {
@@ -40,6 +37,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         public ExcursionViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
             excursionItemView = itemView.findViewById(R.id.excursion_list_item_text);
             itemView.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
@@ -48,9 +46,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                         .putExtra("id", current.getId())
                         .putExtra("name", current.getName())
                         .putExtra("date", current.getDate())
-                        .putExtra("vacationId", vacationId)
+                        .putExtra("vacationId", current.getVacationId())
                         .putExtra("description", current.getDescription());
-                Log.d("MYTAG", "vacationId in excursionAdapter.ExcursionViewHolder: " + vacationId);
                 context.startActivity(intent);
             });
         }
@@ -92,10 +89,5 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         notifyDataSetChanged();
     }
 
-    public void setVacationId(long id) {
-        vacationId = id;
-        Log.d("MYTAG", "vacationId in excursionAdapter.setVacationId: " + vacationId);
-        notifyDataSetChanged();
-    }
 }
 

@@ -28,4 +28,7 @@ public interface ExcursionDao {
 
     @Query("SELECT * FROM excursions WHERE id = :excursionId")
     Excursion getExcursion(long excursionId);
+
+    @Query("SELECT * FROM excursions where vacationId = :id")
+    List<Excursion> getVacationExcursions(long id);
 }

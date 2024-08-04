@@ -27,4 +27,5 @@ public interface VacationDao {
 
     @Query("SELECT * FROM vacations WHERE id = :vacationId")
     Vacation getVacation(long vacationId);
+
 }

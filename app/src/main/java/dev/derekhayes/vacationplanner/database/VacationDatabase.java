@@ -12,12 +12,10 @@ import dev.derekhayes.vacationplanner.dao.VacationDao;
 import dev.derekhayes.vacationplanner.model.Excursion;
 import dev.derekhayes.vacationplanner.model.Vacation;
 
-@Database(entities = {Vacation.class, Excursion.class}, version = 2, exportSchema = false)
-@TypeConverters(Converters.class)
+@Database(entities = {Vacation.class, Excursion.class}, version = 4, exportSchema = false)
 public abstract class VacationDatabase extends RoomDatabase {
     public abstract VacationDao vacationDao();
     public abstract ExcursionDao excursionDao();
-
 
     // Support async
     private static volatile VacationDatabase INSTANCE;

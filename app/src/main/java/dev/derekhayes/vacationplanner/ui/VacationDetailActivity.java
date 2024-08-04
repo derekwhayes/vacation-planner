@@ -42,6 +42,7 @@ public class VacationDetailActivity extends AppCompatActivity {
     TextView datesTV;
     TextView accommodationsTV;
     Excursion excursion;
+    List<Excursion> excursions;
 
     VacationRepository repo;
 
@@ -73,14 +74,6 @@ public class VacationDetailActivity extends AppCompatActivity {
         startDate = getIntent().getStringExtra("startDate");
         endDate = getIntent().getStringExtra("endDate");
         accommodations = getIntent().getStringExtra("accommodations");
-        if (id != -1) {
-            try {
-                excursionIds = new ArrayList<>(repo.getVacation(id).getExcursionIds());
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
         try {
             populateVacation();
         } catch (InterruptedException e) {
@@ -100,7 +93,6 @@ public class VacationDetailActivity extends AppCompatActivity {
             accommodations = vacation.getAccommodationName();
             startDate = vacation.getStartDate();
             endDate = vacation.getEndDate();
-            excursionIds = vacation.getExcursionIds();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -119,30 +111,15 @@ public class VacationDetailActivity extends AppCompatActivity {
         datesTV.setText(getResources().getString(R.string.vacation_dates, startDate, endDate));
         accommodationsTV.setText(accommodations);
 
+        excursions = repo.getVacationExcursions(id);
+
         // setup recycle list
         RecyclerView recyclerView = findViewById(R.id.vacation_excursion_recycler);
         final VacationExcursionsAdapter vacationExcursionsAdapter = new VacationExcursionsAdapter(this);
         recyclerView.setAdapter(vacationExcursionsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationExcursionsAdapter.setExcursions(excursions);
 
-        // convert excursion id list to excursion list if there are excursions
-        List<Excursion> excursions = new ArrayList<>();
-        Log.d("MYTAG", "excursionIds: " + excursionIds);
-
-        if (excursionIds.size() > 1) {
-
-            for (int i = 1; i < excursionIds.size(); i++) {
-                Log.d("MYTAG", "excursionIds.size(): " + excursionIds.size());
-                excursionId = excursionIds.get(i);
-                Log.d("MYTAG", "excursionId: " + excursionId);
-                excursionIdLong = Long.parseLong(excursionId);
-                Log.d("MYTAG", "excursionIdLong" + excursionIdLong);
-                excursion = repo.getExcursion(excursionIdLong);
-                Log.d("MYTAG", "excursion: " + excursion);
-                excursions.add(excursion);
-            }
-            vacationExcursionsAdapter.setExcursions(excursions);
-        }
     }
 
     @Override
@@ -178,10 +155,9 @@ public class VacationDetailActivity extends AppCompatActivity {
     }
 
     public void addExcursion() {
-        Intent intent = new Intent(this, ExcursionListActivity.class);
+        Intent intent = new Intent(this, EditExcursionActivity.class);
         intent.putExtra("vacationId", id);
         Log.d("MYTAG", "vacationId in vacationDetail: " + id);
         startActivity(intent);
-
     }
 }
