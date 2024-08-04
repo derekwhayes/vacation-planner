@@ -14,9 +14,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class ExcursionDetailActivity extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class ExcursionDetailActivity extends AppCompatActivity {
     TextView descriptionTV;
     TextView dateTV;
     VacationRepository repo;
+    long vacationId;
+    Vacation vacation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class ExcursionDetailActivity extends AppCompatActivity {
 
         repo = new VacationRepository(getApplication());
 
+
         // find views
         nameTV = findViewById(R.id.excursion_name_text);
         descriptionTV = findViewById(R.id.excursion_description_text);
@@ -52,6 +58,8 @@ public class ExcursionDetailActivity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         description = getIntent().getStringExtra("description");
         date = getIntent().getStringExtra("date");
+        vacationId = getIntent().getLongExtra("vacationId", -1);
+        Log.d("MYTAG", "vacationId in excursionDetail: " + vacationId);
 
         try {
             populateExcursion();
@@ -99,7 +107,17 @@ public class ExcursionDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.add) {
-            // TODO: add excursionId to vacation
+            // get vacation passed from vacationDetail -> excursionList -> excursionAdapter -> HERE
+            try {
+                vacation = repo.getVacation(vacationId);
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            // get the excursionId list, add new excursion, send list back to vacation
+            List<String> excursionIds = vacation.getExcursionIds();
+            excursionIds.add(String.valueOf(id));
+            vacation.setExcursionIds(excursionIds);
         }
         else if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditExcursionActivity.class);

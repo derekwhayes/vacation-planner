@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
@@ -33,11 +34,14 @@ public class VacationDetailActivity extends AppCompatActivity {
     String endDate;
     String accommodations;
     List<String> excursionIds = new ArrayList<>();
+    String excursionId;
+    long excursionIdLong;
     long id;
     TextView nameTV;
     TextView descriptionTV;
     TextView datesTV;
     TextView accommodationsTV;
+    Excursion excursion;
 
     VacationRepository repo;
 
@@ -71,7 +75,7 @@ public class VacationDetailActivity extends AppCompatActivity {
         accommodations = getIntent().getStringExtra("accommodations");
         if (id != -1) {
             try {
-                excursionIds = repo.getVacation(id).getExcursionIds();
+                excursionIds = new ArrayList<>(repo.getVacation(id).getExcursionIds());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -123,10 +127,19 @@ public class VacationDetailActivity extends AppCompatActivity {
 
         // convert excursion id list to excursion list if there are excursions
         List<Excursion> excursions = new ArrayList<>();
-        if (excursionIds != null) {
+        Log.d("MYTAG", "excursionIds: " + excursionIds);
 
-            for (int i = 0; i < excursionIds.size(); i++) {
-                excursions.add(repo.getExcursion(i));
+        if (excursionIds.size() > 1) {
+
+            for (int i = 1; i < excursionIds.size(); i++) {
+                Log.d("MYTAG", "excursionIds.size(): " + excursionIds.size());
+                excursionId = excursionIds.get(i);
+                Log.d("MYTAG", "excursionId: " + excursionId);
+                excursionIdLong = Long.parseLong(excursionId);
+                Log.d("MYTAG", "excursionIdLong" + excursionIdLong);
+                excursion = repo.getExcursion(excursionIdLong);
+                Log.d("MYTAG", "excursion: " + excursion);
+                excursions.add(excursion);
             }
             vacationExcursionsAdapter.setExcursions(excursions);
         }
@@ -165,6 +178,10 @@ public class VacationDetailActivity extends AppCompatActivity {
     }
 
     public void addExcursion() {
-        startActivity(new Intent(this, ExcursionListActivity.class));
+        Intent intent = new Intent(this, ExcursionListActivity.class);
+        intent.putExtra("vacationId", id);
+        Log.d("MYTAG", "vacationId in vacationDetail: " + id);
+        startActivity(intent);
+
     }
 }

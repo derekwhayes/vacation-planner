@@ -2,6 +2,7 @@ package dev.derekhayes.vacationplanner.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import dev.derekhayes.vacationplanner.ui.adapter.ExcursionAdapter;
 public class ExcursionListActivity extends AppCompatActivity {
 
     VacationRepository repo;
+    private long vacationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class ExcursionListActivity extends AppCompatActivity {
 
         findViewById(R.id.add_excursion_button).setOnClickListener(view -> addExcursion());
 
+        vacationId = getIntent().getLongExtra("vacationId", -1);
+        Log.d("MYTAG", "vacationId in excursionList: " + vacationId);
+
         // setup recycle list
         RecyclerView recyclerView = findViewById(R.id.excursion_recycler);
         repo = new VacationRepository(getApplication());
@@ -47,6 +52,7 @@ public class ExcursionListActivity extends AppCompatActivity {
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        excursionAdapter.setVacationId(vacationId);
         excursionAdapter.setExcursions(excursions);
 
     }
