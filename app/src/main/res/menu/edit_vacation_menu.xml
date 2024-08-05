@@ -14,6 +14,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/notify"
+        android:title="Notify"
+        android:icon="@drawable/notify"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/delete"
         android:title="Delete"
         android:icon="@drawable/delete"

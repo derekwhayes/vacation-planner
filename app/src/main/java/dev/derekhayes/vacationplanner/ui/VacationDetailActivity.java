@@ -1,5 +1,8 @@
 package dev.derekhayes.vacationplanner.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +20,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import dev.derekhayes.vacationplanner.R;
@@ -28,8 +35,6 @@ import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.adapter.VacationExcursionsAdapter;
 
 public class VacationDetailActivity extends AppCompatActivity {
-
-    // TODO: Excursion list isn't showing onCreate
 
     String name;
     String description;
@@ -171,6 +176,35 @@ public class VacationDetailActivity extends AppCompatActivity {
             sentIntent.setType("text/plain");
             Intent shareIntent = Intent.createChooser(sentIntent, null);
             startActivity(shareIntent);
+            return true;
+        }
+        else if (item.getItemId() == R.id.notify) {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setMessage("On which day would you like to receive a reminder?")
+                    .setPositiveButton("Start Date", (dialogInterface, i) -> {
+                        Date date;
+                        try {
+                            date = format.parse(startDate);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Long trigger = date.getTime();
+                        Intent intent = new Intent(VacationDetailActivity.this, MyReceiver.class);
+                        intent.putExtra("startAlert", name + " starts today!");
+                        PendingIntent sender = PendingIntent.getBroadcast(VacationDetailActivity.this,  ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+
+                    })
+                    .setNeutralButton("End Date", (dialogInterface, i) -> {
+
+                    })
+                    .setNegativeButton("Cancel", null);
+
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
             return true;
         }
         else if (item.getItemId() == R.id.delete) {

@@ -175,7 +175,7 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
 
     public boolean isValidDate(String date, boolean isStartDate) throws ParseException {
 
-        Log.d("MYTAG", "isValidDate startDate: " + startDate + ", endDate" + endDate);
+        Log.d("MYTAG", "isValidDate startDate: " + startDate + ", endDate: " + endDate + ", date: " + date + ", isStartDate: " + isStartDate);
 
         String startStringDate;
         String endStringDate;
@@ -185,7 +185,8 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         // if isStartDate is true  we need to assign startStringDate with passed date argument or if it's not the start date then assign it to endStringDate
         if (isStartDate) {
             startStringDate = date;
-            if (!endDateBtn.getText().toString().equals("End Date")) {
+            // if (!endDateBtn.getText().toString().equals("End Date")) {
+            if (endDate != null) {
                 endStringDate = endDate;
             }
             else {
@@ -193,7 +194,8 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
             }
         }
         else {
-            if (!startDateBtn.getText().toString().equals("Start Date")) {
+            // if (!startDateBtn.getText().toString().equals("Start Date")) {
+            if (startDate != null) {
                 startStringDate = startDate;
             }
             else {
