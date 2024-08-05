@@ -75,7 +75,7 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         excursion = repo.getExcursion(id);
         nameTV.setText(excursion.getName());
         descriptionTV.setText(excursion.getDescription());
-        dateBtn.setText(excursion.getDescription());
+        dateBtn.setText(excursion.getDate());
     }
 
     @Override

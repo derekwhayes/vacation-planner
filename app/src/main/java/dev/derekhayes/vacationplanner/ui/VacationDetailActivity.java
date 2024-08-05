@@ -145,6 +145,7 @@ public class VacationDetailActivity extends AppCompatActivity {
             builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> {
                 try {
                     Log.d("MYTAG", "vacationExcursions: " + repo.getVacationExcursions(id));
+                    // Make sure vacation has no excursions before deleting
                     if (repo.getVacationExcursions(id).isEmpty()) {
                         repo.deleteVacation(repo.getVacation(id));
                         finish();
