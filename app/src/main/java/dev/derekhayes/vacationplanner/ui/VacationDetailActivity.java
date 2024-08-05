@@ -192,16 +192,27 @@ public class VacationDetailActivity extends AppCompatActivity {
                         }
                         Long trigger = date.getTime();
                         Intent intent = new Intent(VacationDetailActivity.this, MyReceiver.class);
-                        intent.putExtra("startAlert", name + " starts today!");
+                        intent.putExtra("vacationAlert", name + " starts today!");
                         PendingIntent sender = PendingIntent.getBroadcast(VacationDetailActivity.this,  ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
 
                     })
-                    .setNeutralButton("End Date", (dialogInterface, i) -> {
-
-                    })
-                    .setNegativeButton("Cancel", null);
+                    .setNeutralButton("Cancel", null)
+                    .setNegativeButton("End Date", ((dialogInterface, i) -> {
+                        Date date;
+                        try {
+                            date = format.parse(endDate);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Long trigger = date.getTime();
+                        Intent intent = new Intent(VacationDetailActivity.this, MyReceiver.class);
+                        intent.putExtra("vacationAlert", name + " ends today!");
+                        PendingIntent sender = PendingIntent.getBroadcast(VacationDetailActivity.this,  ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                    }));
 
             AlertDialog mDialog = builder.create();
             mDialog.show();

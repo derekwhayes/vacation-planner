@@ -18,14 +18,14 @@ public class MyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
+
         // an Intent broadcast.
-        Toast.makeText(context, intent.getStringExtra("startAlert"), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, intent.getStringExtra("vacationAlert"), Toast.LENGTH_LONG).show();
         createNotificationChannel(context, channel_id);
         Notification n = new NotificationCompat.Builder(context, channel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentText(intent.getStringExtra("startAlert"))
-                .setContentTitle("NotificationTest").build();
+                .setContentText(intent.getStringExtra("vacationAlert"))
+                .setContentTitle("Vacation Planner").build();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++, n);
     }
