@@ -140,6 +140,39 @@ public class VacationDetailActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        else if (item.getItemId() == R.id.share) {
+            // build String with all vacation details
+            StringBuilder infoToSend = new StringBuilder(name + "\n" +
+                    "----------------\n" +
+                    description + "\n" +
+                    "From " + startDate + " to " + endDate + "\n" +
+                    "Staying at: " + accommodations + "\n" +
+                    "Excursions: \n" +
+                    "----------------\n");
+
+            List<Excursion> excursions = null;
+            try {
+                excursions = repo.getVacationExcursions(id);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (excursions != null) {
+                for (int i = 0; i < excursions.size(); i++) {
+                    infoToSend.append("- ").append(excursions.get(i).getName()).append("\n");
+                }
+            }
+
+            // send info via createChooser
+            Intent sentIntent = new Intent();
+            sentIntent.setAction(Intent.ACTION_SEND);
+            sentIntent.putExtra(Intent.EXTRA_TITLE, "My Vacation Details");
+            sentIntent.putExtra(Intent.EXTRA_TEXT, infoToSend.toString());
+            sentIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sentIntent, null);
+            startActivity(shareIntent);
+            return true;
+        }
         else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> {

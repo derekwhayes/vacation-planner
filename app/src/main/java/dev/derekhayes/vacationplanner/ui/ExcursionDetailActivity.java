@@ -98,7 +98,7 @@ public class ExcursionDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_vacation_menu, menu);
+        getMenuInflater().inflate(R.menu.edit_excursion_menu, menu);
         return true;
     }
 
