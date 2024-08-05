@@ -98,23 +98,14 @@ public class ExcursionDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_excursion_menu, menu);
+        getMenuInflater().inflate(R.menu.edit_vacation_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.add) {
-            // get vacation passed from vacationDetail -> excursionList -> excursionAdapter -> HERE
-            try {
-                vacation = repo.getVacation(vacationId);
-
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else if (item.getItemId() == R.id.edit) {
+        if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditExcursionActivity.class);
             intent.putExtra("excursionId", id);
             Log.d("TAG", "id: " + id);
@@ -122,13 +113,15 @@ public class ExcursionDetailActivity extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.delete) {
-            try {
-                repo.deleteVacation(repo.getVacation(id));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> finish()).setNegativeButton("Cancel", null);
+            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> {
+                try {
+                    repo.deleteExcursion(repo.getExcursion(id));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                finish();
+            }).setNegativeButton("Cancel", null);
 
             AlertDialog mDialog = builder.create();
             mDialog.show();

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -27,6 +28,8 @@ import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.adapter.VacationExcursionsAdapter;
 
 public class VacationDetailActivity extends AppCompatActivity {
+
+    // TODO: Excursion list isn't showing onCreate
 
     String name;
     String description;
@@ -138,13 +141,21 @@ public class VacationDetailActivity extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.delete) {
-            try {
-                repo.deleteVacation(repo.getVacation(id));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> finish()).setNegativeButton("Cancel", null);
+            builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> {
+                try {
+                    Log.d("MYTAG", "vacationExcursions: " + repo.getVacationExcursions(id));
+                    if (repo.getVacationExcursions(id).isEmpty()) {
+                        repo.deleteVacation(repo.getVacation(id));
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(this, "Excursions must be deleted first", Toast.LENGTH_LONG).show();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).setNegativeButton("Cancel", null);
 
             AlertDialog mDialog = builder.create();
             mDialog.show();

@@ -62,18 +62,10 @@ public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcu
 
     @Override
     public void onBindViewHolder(@NonNull VacationExcursionsAdapter.VacationExcursionsViewHolder holder, int position) {
-        if (excursions.get(0) != null) {
-            Log.d("MYTAG", "excursions: " + excursions);
-            Log.d("MYTAG", "position: " + position);
+        if (excursions != null) {
             Excursion current = excursions.get(position);
-            Log.d("MYTAG", "current: " + current);
-
             String name = current.getName();
             holder.vacationExcursionsItemView.setText(name);
-
-        }
-        else {
-             holder.vacationExcursionsItemView.setText("No excursions yet!");
         }
     }
 

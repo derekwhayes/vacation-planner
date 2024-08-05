@@ -73,8 +73,6 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
             }
         }
 
-
-
         findViewById(R.id.vacation_start_date_button).setOnClickListener(view -> {
             isStartDate = true;
             DatePickerFragment fragment = new DatePickerFragment();
@@ -138,29 +136,6 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
             }
 
             finish();
-
-            return true;
-        }
-        else if (item.getItemId() == R.id.delete) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure?")
-                    .setPositiveButton("Ok", (dialogInterface, i) -> {
-                        if (vacation != null) {
-                            try {
-                                repo.deleteVacation(vacation);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        Intent intent = new Intent(this, VacationListActivity.class)
-                                // returns us to the main activity if vacation is deleted and we press back
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    })
-                    .setNegativeButton("Cancel", null);
-
-            AlertDialog mDialog = builder.create();
-            mDialog.show();
 
             return true;
         }
