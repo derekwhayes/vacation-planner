@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -12,7 +11,8 @@
         android:id="@+id/edit_excursion_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excursion Name"
+        android:text="@string/excursion_name"
+        android:labelFor="@id/edit_excursion_name"
         android:textSize="16sp" />
 
     <EditText
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Description"
+        android:text="@string/description"
         android:textSize="16sp" />
 
     <EditText
@@ -48,8 +48,9 @@
         android:id="@+id/excursion_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"/>
+        android:layout_margin="20dp"
+        android:background="@color/blue"
+        android:text="@string/date"
+        android:textSize="16sp" />
 
 </TableLayout>

@@ -2,7 +2,6 @@ package dev.derekhayes.vacationplanner.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -14,12 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.List;
-
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
-import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class ExcursionDetailActivity extends AppCompatActivity {
 
@@ -32,7 +28,6 @@ public class ExcursionDetailActivity extends AppCompatActivity {
     TextView dateTV;
     VacationRepository repo;
     long vacationId;
-    Vacation vacation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,6 @@ public class ExcursionDetailActivity extends AppCompatActivity {
         });
 
         repo = new VacationRepository(getApplication());
-
 
         // find views
         nameTV = findViewById(R.id.excursion_name_text);
@@ -108,7 +102,6 @@ public class ExcursionDetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditExcursionActivity.class);
             intent.putExtra("excursionId", id);
-            Log.d("TAG", "id: " + id);
             startActivity(intent);
             return true;
         }

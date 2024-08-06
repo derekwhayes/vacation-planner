@@ -2,7 +2,6 @@ package dev.derekhayes.vacationplanner.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcu
         public VacationExcursionsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            vacationExcursionsItemView = itemView.findViewById(R.id.excursion_list_item_text);
+            vacationExcursionsItemView = itemView.findViewById(R.id.vacation_list_item_text);
             itemView.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 final Excursion current = excursions.get(position);
@@ -55,7 +54,7 @@ public class VacationExcursionsAdapter extends RecyclerView.Adapter<VacationExcu
     @Override
     public VacationExcursionsAdapter.VacationExcursionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = inflater.inflate(R.layout.excursion_list_item, parent, false);
+        View itemView = inflater.inflate(R.layout.vacation_list_item, parent, false);
 
         return new VacationExcursionsAdapter.VacationExcursionsViewHolder(itemView);
     }

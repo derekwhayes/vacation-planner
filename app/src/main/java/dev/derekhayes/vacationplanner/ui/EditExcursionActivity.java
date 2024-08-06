@@ -1,7 +1,6 @@
 package dev.derekhayes.vacationplanner.ui;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -145,9 +144,8 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         String month_str = Integer.toString(month + 1);
         String day_str = Integer.toString(day);
         String year_str = Integer.toString(year);
-        String dateStr = (month_str + "/" + day_str + "/" + year_str);
 
-        date = dateStr;
+        date = (month_str + "/" + day_str + "/" + year_str);
         Button button = findViewById(R.id.excursion_date_button);
         button.setText(date);
     }

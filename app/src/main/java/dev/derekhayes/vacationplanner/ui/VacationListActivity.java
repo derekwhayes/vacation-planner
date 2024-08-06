@@ -49,7 +49,7 @@ public class VacationListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // update the vacation list when backing up
+    // update the vacation list when using up button
     @Override
     public void onResume() {
         super.onResume();

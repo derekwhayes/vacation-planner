@@ -1,4 +1,4 @@
-package dev.derekhayes.vacationplanner.ui;
+package dev.derekhayes.vacationplanner.ui.receiver;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

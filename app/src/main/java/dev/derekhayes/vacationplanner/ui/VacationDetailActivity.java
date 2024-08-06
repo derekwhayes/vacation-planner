@@ -22,17 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
 import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.adapter.VacationExcursionsAdapter;
+import dev.derekhayes.vacationplanner.ui.receiver.MyReceiver;
 
 public class VacationDetailActivity extends AppCompatActivity {
 
@@ -41,15 +40,11 @@ public class VacationDetailActivity extends AppCompatActivity {
     String startDate;
     String endDate;
     String accommodations;
-    List<String> excursionIds = new ArrayList<>();
-    String excursionId;
-    long excursionIdLong;
     long id;
     TextView nameTV;
     TextView descriptionTV;
     TextView datesTV;
     TextView accommodationsTV;
-    Excursion excursion;
     List<Excursion> excursions;
 
     VacationRepository repo;
@@ -127,7 +122,6 @@ public class VacationDetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(vacationExcursionsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationExcursionsAdapter.setExcursions(excursions);
-
     }
 
     @Override
@@ -190,7 +184,7 @@ public class VacationDetailActivity extends AppCompatActivity {
                         } catch (ParseException e) {
                             throw new RuntimeException(e);
                         }
-                        Long trigger = date.getTime();
+                        long trigger = date.getTime();
                         Intent intent = new Intent(VacationDetailActivity.this, MyReceiver.class);
                         intent.putExtra("vacationAlert", name + " starts today!");
                         PendingIntent sender = PendingIntent.getBroadcast(VacationDetailActivity.this,  ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
@@ -206,7 +200,7 @@ public class VacationDetailActivity extends AppCompatActivity {
                         } catch (ParseException e) {
                             throw new RuntimeException(e);
                         }
-                        Long trigger = date.getTime();
+                        long trigger = date.getTime();
                         Intent intent = new Intent(VacationDetailActivity.this, MyReceiver.class);
                         intent.putExtra("vacationAlert", name + " ends today!");
                         PendingIntent sender = PendingIntent.getBroadcast(VacationDetailActivity.this,  ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
@@ -222,7 +216,6 @@ public class VacationDetailActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure?").setPositiveButton("Ok", (dialogInterface, i) -> {
                 try {
-                    Log.d("MYTAG", "vacationExcursions: " + repo.getVacationExcursions(id));
                     // Make sure vacation has no excursions before deleting
                     if (repo.getVacationExcursions(id).isEmpty()) {
                         repo.deleteVacation(repo.getVacation(id));
@@ -239,7 +232,6 @@ public class VacationDetailActivity extends AppCompatActivity {
             AlertDialog mDialog = builder.create();
             mDialog.show();
             return true;
-
         }
         return false;
     }

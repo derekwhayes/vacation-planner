@@ -12,8 +12,8 @@ import dev.derekhayes.vacationplanner.model.Excursion;
 import dev.derekhayes.vacationplanner.model.Vacation;
 
 public class VacationRepository {
-    private VacationDao vacationDao;
-    private ExcursionDao excursionDao;
+    private final VacationDao vacationDao;
+    private final ExcursionDao excursionDao;
 
     private Vacation vacation;
     private Excursion excursion;

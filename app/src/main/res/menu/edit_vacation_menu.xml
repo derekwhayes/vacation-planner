@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/edit"
-        android:title="Edit"
+        android:title="@string/edit"
         android:icon="@drawable/edit"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/share"
-        android:title="Share"
+        android:title="@string/share"
         android:icon="@drawable/share"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/notify"
-        android:title="Notify"
+        android:title="@string/notify"
         android:icon="@drawable/notify"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/delete"
-        android:title="Delete"
+        android:title="@string/delete"
         android:icon="@drawable/delete"
         app:showAsAction="ifRoom" />
 </menu>

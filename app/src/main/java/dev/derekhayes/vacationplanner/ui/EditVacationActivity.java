@@ -1,10 +1,6 @@
 package dev.derekhayes.vacationplanner.ui;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -12,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
@@ -66,7 +62,6 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
 
         // check if editing existing vacation and populate views accordingly
         long vacationId = getIntent().getLongExtra("vacationId", -1);
-        Log.d("TAG", "vacationId: " + vacationId);
         if (vacationId != -1) {
             // set if vacation is edit or new
             isAddNewVacation = false;
@@ -149,7 +144,6 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     // from DatePicker
     @Override
     public void processDatePickerResult(int year, int month, int day) throws ParseException {
-        Log.d("MYTAG", "Arguments passed to processDatePickerResult year:" + year + ", month: " + month + ", day: " + day);
         // stringify ints
         String month_str = Integer.toString(month + 1);
         String day_str = Integer.toString(day);
@@ -174,8 +168,6 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     }
 
     public boolean isValidDate(String date, boolean isStartDate) throws ParseException {
-
-        Log.d("MYTAG", "isValidDate startDate: " + startDate + ", endDate: " + endDate + ", date: " + date + ", isStartDate: " + isStartDate);
 
         String startStringDate;
         String endStringDate;
@@ -205,8 +197,7 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         }
 
         // set strings to Date and compare to make sure start is before end
-        Log.d("MYTAG", "variables in isValidDate startStringDate: " + startStringDate + ", endStringDate: " + endStringDate);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         startFormattedDate = format.parse(startStringDate);
         endFormattedDate = format.parse(endStringDate);
 

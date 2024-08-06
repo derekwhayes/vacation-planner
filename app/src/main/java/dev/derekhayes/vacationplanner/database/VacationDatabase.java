@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
 import dev.derekhayes.vacationplanner.dao.ExcursionDao;
 import dev.derekhayes.vacationplanner.dao.VacationDao;

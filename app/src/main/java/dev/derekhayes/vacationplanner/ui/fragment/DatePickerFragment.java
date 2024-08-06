@@ -3,7 +3,6 @@ package dev.derekhayes.vacationplanner.ui.fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
@@ -27,7 +26,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Log.d("MEEEEEEEEEEEEE", "starting dialog");
         // Use current date as default
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
