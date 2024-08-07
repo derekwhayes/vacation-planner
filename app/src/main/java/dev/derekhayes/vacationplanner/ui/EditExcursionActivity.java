@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +14,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Excursion;
+import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.fragment.DatePickerFragment;
 
 public class EditExcursionActivity extends AppCompatActivity implements DatePickerFragment.IDateSetListener {
@@ -43,7 +50,8 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         });
 
         repo = new VacationRepository(getApplication());
-        vacationId = getIntent().getLongExtra("vacationId", -1);
+
+
 
         // set views
         nameTV = findViewById(R.id.edit_excursion_name);
@@ -61,6 +69,14 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
             catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        // get vacationId
+        if (isAddNewExcursion) {
+            vacationId = getIntent().getLongExtra("vacationId", -1);
+        }
+        else {
+            vacationId = excursion.getVacationId();
         }
 
         findViewById(R.id.excursion_date_button).setOnClickListener(view -> {
@@ -95,24 +111,34 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
             description = descriptionTV.getText().toString();
             date = dateBtn.getText().toString();
 
-            if (isAddNewExcursion) {
-                excursion = new Excursion(name, date, description, vacationId);
-                try {
-                    repo.addExcursion(excursion);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+            try {
+                if (isValidDate(date)) {
+
+                    if (isAddNewExcursion) {
+                        excursion = new Excursion(name, date, description, vacationId);
+                        try {
+                            repo.addExcursion(excursion);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        excursion.setName(name);
+                        excursion.setDescription(description);
+                        excursion.setDate(date);
+                        try {
+                            repo.updateExcursion(excursion);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    finish();
                 }
-            } else {
-                excursion.setName(name);
-                excursion.setDescription(description);
-                excursion.setDate(date);
-                try {
-                    repo.updateExcursion(excursion);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                else {
+                    Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
                 }
+            } catch (ParseException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            finish();
             return true;
 
         }
@@ -152,6 +178,27 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         date = (month_str + "/" + day_str + "/" + year_str);
         Button button = findViewById(R.id.excursion_date_button);
         button.setText(date);
+    }
+
+    public boolean isValidDate(String excursionDate) throws ParseException, InterruptedException {
+
+        // get vacation start and end dates
+        Vacation vacation = repo.getVacation(vacationId);
+        String startDate = vacation.getStartDate();
+        String endDate = vacation.getEndDate();
+
+        // set string to Date and compare to make sure date is within vacation start and end dates
+        // check if dates have been set
+        if (!excursionDate.equals("Date") && !startDate.equals("Start Date") && !endDate.equals("End Date")) {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date excursionFormattedDate = format.parse(excursionDate);
+            Date startFormattedDate = format.parse(startDate);
+            Date endFormattedDate = format.parse(endDate);
+
+            return excursionFormattedDate.before(endFormattedDate) && excursionFormattedDate.after(startFormattedDate) || excursionFormattedDate.equals(startFormattedDate) || excursionFormattedDate.equals(endFormattedDate);
+        }
+
+        return false;
     }
 }
 
