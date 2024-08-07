@@ -27,7 +27,7 @@
             android:name=".ui.EditVacationActivity"
             android:exported="false"
             android:label="Edit Vacation"
-            android:parentActivityName=".ui.VacationListActivity" />
+            android:parentActivityName=".ui.VacationDetailActivity" />
         <activity
             android:name=".ui.ExcursionDetailActivity"
             android:exported="false"

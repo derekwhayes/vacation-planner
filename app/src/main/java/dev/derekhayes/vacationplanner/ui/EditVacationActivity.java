@@ -104,7 +104,11 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.save) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        else if (item.getItemId() == R.id.save) {
             // Collect info from edit fields
             name = nameTV.getText().toString();
             accommodations = accommodationsTV.getText().toString();

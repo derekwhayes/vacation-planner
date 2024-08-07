@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".ui.EditVacationActivity">
+
+    <EditText
+        android:id="@+id/edit_vacation_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/name"
+        android:textColorHint="@color/dark_blue"
+        android:textSize="16sp"
+        android:importantForAutofill="no"
+        android:maxLines="1"
+        android:maxLength="50"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_vacation_description"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_vacation_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/description"
+        android:textColorHint="@color/dark_blue"
+        android:textSize="16sp"
+        android:importantForAutofill="no"
+        android:maxLines="3"
+        android:maxLength="250"
+        app:layout_constraintTop_toBottomOf="@id/edit_vacation_name"
+        app:layout_constraintBottom_toTopOf="@id/vacation_end_date_button"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/vacation_start_date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_date"
+        android:background="@color/blue"
+        android:textSize="16sp"
+        android:elevation="10dp"
+        android:paddingStart="75dp"
+        android:paddingEnd="75dp"
+        android:layout_margin="20dp"
+        style="@style/Widget.AppCompat.ActionButton"
+        app:layout_constraintTop_toBottomOf="@id/edit_vacation_description"
+        app:layout_constraintBottom_toTopOf="@id/edit_vacation_accommodations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/vacation_end_date_button" />
+
+    <Button
+        android:id="@+id/vacation_end_date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_date"
+        android:elevation="10dp"
+        android:paddingEnd="75dp"
+        android:paddingStart="75dp"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:background="@color/blue"
+        android:textSize="16sp"
+        android:layout_margin="20dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/vacation_start_date_button"
+        app:layout_constraintStart_toEndOf="@id/vacation_start_date_button"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_vacation_accommodations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:textColorHint="@color/dark_blue"
+        android:hint="@string/accommodations"
+        android:importantForAutofill="no"
+        android:maxLength="50"
+        app:layout_constraintTop_toBottomOf="@id/vacation_start_date_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

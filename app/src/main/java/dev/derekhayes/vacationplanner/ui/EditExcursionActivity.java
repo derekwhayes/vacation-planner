@@ -85,7 +85,11 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.save) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        else if (item.getItemId() == R.id.save) {
             // collect info from edit fields
             name = nameTV.getText().toString();
             description = descriptionTV.getText().toString();

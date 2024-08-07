@@ -87,7 +87,7 @@ public class VacationDetailActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.d("MYTAG", "starting onResume -- id: " + id);
         // set info from edited vacation
         try {
             Vacation vacation = repo.getVacation(id);
@@ -109,6 +109,7 @@ public class VacationDetailActivity extends AppCompatActivity {
 
     private void populateVacation() throws InterruptedException {
 
+        Log.d("MYTAG", "starting populateVacation() -- name: " + name);
         nameTV.setText(name);
         descriptionTV.setText(description);
         datesTV.setText(getResources().getString(R.string.vacation_dates, startDate, endDate));
@@ -132,7 +133,11 @@ public class VacationDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.edit) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        else if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditVacationActivity.class);
             intent.putExtra("vacationId", id);
             Log.d("TAG", "id: " + id);

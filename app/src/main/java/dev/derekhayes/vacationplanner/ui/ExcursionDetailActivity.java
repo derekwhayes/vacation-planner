@@ -98,8 +98,11 @@ public class ExcursionDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.edit) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        else if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditExcursionActivity.class);
             intent.putExtra("excursionId", id);
             startActivity(intent);
