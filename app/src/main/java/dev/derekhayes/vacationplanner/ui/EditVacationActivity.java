@@ -1,6 +1,7 @@
 package dev.derekhayes.vacationplanner.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -177,10 +178,15 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
     public boolean isValidDate(String startDate, String endDate) throws ParseException {
 
         // set strings to Date and compare to make sure start is before end
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        Date startFormattedDate = format.parse(startDate);
-        Date endFormattedDate = format.parse(endDate);
+        // check if dates have been set
+        if (!startDate.equals("Start Date") && !endDate.equals("End Date")) {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date startFormattedDate = format.parse(startDate);
+            Date endFormattedDate = format.parse(endDate);
 
-        return startFormattedDate.before(endFormattedDate);
+            return startFormattedDate.before(endFormattedDate);
+        }
+
+        return false;
     }
 }
