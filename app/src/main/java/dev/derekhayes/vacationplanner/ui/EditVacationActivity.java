@@ -116,29 +116,36 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
             startDate = startDateBtn.getText().toString();
             endDate = endDateBtn.getText().toString();
 
-            if (isAddNewVacation) {
-                vacation = new Vacation(name, accommodations, startDate, endDate, description);
-                try {
-                    repo.addVacation(vacation);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+            // Check to see if startDate is before endDate / vice versa and assign variables and text accordingly
+            try {
+                if (isValidDate(startDate, endDate)) {
+                    if (isAddNewVacation) {
+                        vacation = new Vacation(name, accommodations, startDate, endDate, description);
+                        try {
+                            repo.addVacation(vacation);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        vacation.setName(name);
+                        vacation.setAccommodationName(accommodations);
+                        vacation.setDescription(description);
+                        vacation.setStartDate(startDate);
+                        vacation.setEndDate(endDate);
+                        try {
+                            repo.updateVacation(vacation);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    finish();
                 }
+                else {
+                    Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
+                }
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
             }
-            else {
-                vacation.setName(name);
-                vacation.setAccommodationName(accommodations);
-                vacation.setDescription(description);
-                vacation.setStartDate(startDate);
-                vacation.setEndDate(endDate);
-                try {
-                    repo.updateVacation(vacation);
-                }
-                catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            finish();
 
             return true;
         }
@@ -154,8 +161,7 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         String year_str = Integer.toString(year);
         String date = (month_str + "/" + day_str + "/" + year_str);
 
-        // Check to see if startDate is before endDate / vice versa and assign variables and text accordingly
-        if (isValidDate(date, isStartDate)) {
+
             if (isStartDate) {
                 startDate = date;
                 Button button = findViewById(R.id.vacation_start_date_button);
@@ -165,45 +171,15 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
                 Button button = findViewById(R.id.vacation_end_date_button);
                 button.setText(endDate);
             }
-        }
-        else {
-            Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
-        }
+
     }
 
-    public boolean isValidDate(String date, boolean isStartDate) throws ParseException {
-
-        String startStringDate;
-        String endStringDate;
-        Date startFormattedDate;
-        Date endFormattedDate;
-
-        // if isStartDate is true  we need to assign startStringDate with passed date argument or if it's not the start date then assign it to endStringDate
-        if (isStartDate) {
-            startStringDate = date;
-            // if (!endDateBtn.getText().toString().equals("End Date")) {
-            if (endDate != null) {
-                endStringDate = endDate;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            // if (!startDateBtn.getText().toString().equals("Start Date")) {
-            if (startDate != null) {
-                startStringDate = startDate;
-            }
-            else {
-                return true;
-            }
-            endStringDate = date;
-        }
+    public boolean isValidDate(String startDate, String endDate) throws ParseException {
 
         // set strings to Date and compare to make sure start is before end
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        startFormattedDate = format.parse(startStringDate);
-        endFormattedDate = format.parse(endStringDate);
+        Date startFormattedDate = format.parse(startDate);
+        Date endFormattedDate = format.parse(endDate);
 
         return startFormattedDate.before(endFormattedDate);
     }
