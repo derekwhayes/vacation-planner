@@ -28,4 +28,6 @@ public interface VacationDao {
     @Query("SELECT * FROM vacations WHERE id = :vacationId")
     Vacation getVacation(long vacationId);
 
+    @Query("SELECT * FROM vacations WHERE name LIKE :query ORDER BY name")
+    List<Vacation> getQueriedVacations(String query);
 }

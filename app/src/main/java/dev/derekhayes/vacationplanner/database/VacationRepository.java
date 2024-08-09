@@ -93,6 +93,22 @@ public class VacationRepository {
         return vacation;
     }
 
+    public List<Vacation> getQueriedVacations(String query) {
+        databaseExecutor.execute(() -> {
+            // wildcard returns entries with query anywhere in string
+            vacations = vacationDao.getQueriedVacations("%" + query + "%");
+        });
+
+        try {
+            Thread.sleep(100);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return vacations;
+    }
+
     public void addExcursion(Excursion excursion) throws InterruptedException {
         databaseExecutor.execute(() -> {
             excursionDao.addExcursion(excursion);
@@ -171,4 +187,6 @@ public class VacationRepository {
 
         return excursions;
     }
+
+
 }
