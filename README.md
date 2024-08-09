@@ -6,7 +6,7 @@ The application allows the user to create and manage vacations. The application 
 ### Android Version - 14
 ### API Version - 34
  
-### <a href="https://gitlab.com/wgu-gitlab-environment/student-repos/dhaye48/d308-mobile-application-development-android.git">Vacation Planner GitLab Repository</a>
+### <a href="https://gitlab.com/wgu-gitlab-environment/student-repos/dhaye48/d424-software-engineering-capstone.git">Vacation Planner GitLab Repository</a>
 
 ## Directions
 * <strong>B1</strong> - Persist data
