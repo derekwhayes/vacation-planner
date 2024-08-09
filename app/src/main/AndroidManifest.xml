@@ -15,11 +15,15 @@
         android:theme="@style/Theme.VacationPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".ui.SearchActivity"
-            android:label="Search Results"
+            android:name=".ui.ReportActivity"
             android:exported="false"
+            android:label="Vacation Report"
+            android:parentActivityName=".ui.VacationListActivity"/>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:exported="false"
+            android:label="Search Results"
             android:parentActivityName=".ui.VacationListActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -27,7 +31,6 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
         </activity>
 
         <receiver
@@ -61,7 +64,8 @@
             android:label="Vacations"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.MainActivity">
-            <meta-data android:name="android.app.default_searchable"
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".ui.SearchActivity" />
         </activity>
         <activity

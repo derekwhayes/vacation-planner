@@ -90,6 +90,11 @@ public class VacationListActivity extends AppCompatActivity {
             onSearchRequested();
             return true;
         }
+        if (item.getItemId() == R.id.report) {
+            Intent intent = new Intent(this, ReportActivity.class);
+            startActivity(intent);
+        }
+
         return false;
     }
 }
