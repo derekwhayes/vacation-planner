@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import java.util.List;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
 import dev.derekhayes.vacationplanner.model.Vacation;
 import dev.derekhayes.vacationplanner.ui.adapter.ReportAdapter;
-import dev.derekhayes.vacationplanner.ui.adapter.VacationAdapter;
 
 public class ReportActivity extends AppCompatActivity {
 
