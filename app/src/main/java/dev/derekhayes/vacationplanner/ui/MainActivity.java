@@ -21,6 +21,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dev.derekhayes.vacationplanner.R;
 
@@ -82,36 +84,51 @@ public class MainActivity extends AppCompatActivity {
     public void onClickGetStarted() {
         usernameView = findViewById(R.id.username_input_edit);
         passwordView = findViewById(R.id.password_input_edit);
+        TextView loginError = findViewById(R.id.login_error_text);
 
         if (usernameView.length() > 0 && passwordView.length() > 0) {
-            username = usernameView.getText().toString();
-            password = passwordView.getText().toString();
+            username = usernameView.getText().toString().trim();
+            password = passwordView.getText().toString().trim();
+            Log.d("MYTAG", "username:" + username + ":end");
         }
 
-        Log.d("MYTAG", "entered username: " + username);
-        Log.d("MYTAG", "entered password: " + password);
-
         if (isNewAccount) {
-            // set new username and password
-            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-            editor.putString("username", username);
-            editor.putString("password", password);
-            editor.apply();
+            if (validatePassword(password)) {
+                // set new username and password
+                SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+                editor.putString("username", username);
+                editor.putString("password", password);
+                editor.apply();
 
-            Log.d("MYTAG", "new username: " + username);
-            Log.d("MYTAG", "new password" + password);
-            startActivity(new Intent(this, VacationListActivity.class));
+                startActivity(new Intent(this, VacationListActivity.class));
+            }
+            else {
+                loginError.setText(R.string.validate_password);
+                loginError.setVisibility(View.VISIBLE);
+            }
         }
         else if (encryptedSharedPreferences.getString("username", "defaultUser")
                 .equals(username) && encryptedSharedPreferences.getString("password", "defaultPass").equals(password)) {
 
-            Log.d("MYTAG", "stored username: " + encryptedSharedPreferences.getString("username", "defaultUser"));
-            Log.d("MYTAG", "stored password" + encryptedSharedPreferences.getString("password", "defaultPass"));
-
             startActivity(new Intent(this, VacationListActivity.class));
         }
         else {
-            findViewById(R.id.login_error_text).setVisibility(View.VISIBLE);
+            loginError.setVisibility(View.VISIBLE);
         }
+    }
+
+    private boolean validatePassword(String password) {
+
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,20}$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        if (password == null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 }

@@ -27,4 +27,6 @@
     <string name="username">Username</string>
     <string name="create_account">Create Account</string>
     <string name="create_sample_data">Create Sample Data</string>
+    <string name="validate_password">"Password must be at least eight characters long, contain one lower case letter, one upper case letter, one number, and one special character"</string>
+    <string name="username_password_incorrect">Username/Password incorrect!</string>
 </resources>
