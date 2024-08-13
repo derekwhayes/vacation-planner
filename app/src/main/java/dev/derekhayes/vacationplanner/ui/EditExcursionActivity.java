@@ -107,31 +107,35 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
         }
         else if (item.getItemId() == R.id.save) {
             // collect info from edit fields
-            name = nameTV.getText().toString();
-            description = descriptionTV.getText().toString();
+            name = nameTV.getText().toString().trim();
+            description = descriptionTV.getText().toString().trim();
             date = dateBtn.getText().toString();
 
             try {
                 if (isValidDate(date)) {
-
-                    if (isAddNewExcursion) {
-                        excursion = new Excursion(name, date, description, vacationId);
-                        try {
-                            repo.addExcursion(excursion);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                    if (!name.isEmpty()) {
+                        if (isAddNewExcursion) {
+                            excursion = new Excursion(name, date, description, vacationId);
+                            try {
+                                repo.addExcursion(excursion);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            excursion.setName(name);
+                            excursion.setDescription(description);
+                            excursion.setDate(date);
+                            try {
+                                repo.updateExcursion(excursion);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                    } else {
-                        excursion.setName(name);
-                        excursion.setDescription(description);
-                        excursion.setDate(date);
-                        try {
-                            repo.updateExcursion(excursion);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        finish();
                     }
-                    finish();
+                    else {
+                        Toast.makeText(this, "Please enter an excursion name", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else {
                     Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();

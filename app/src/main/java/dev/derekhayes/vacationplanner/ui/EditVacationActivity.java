@@ -111,35 +111,40 @@ public class EditVacationActivity extends AppCompatActivity implements DatePicke
         }
         else if (item.getItemId() == R.id.save) {
             // Collect info from edit fields
-            name = nameTV.getText().toString();
-            accommodations = accommodationsTV.getText().toString();
-            description = descriptionTV.getText().toString();
+            name = nameTV.getText().toString().trim();
+            accommodations = accommodationsTV.getText().toString().trim();
+            description = descriptionTV.getText().toString().trim();
             startDate = startDateBtn.getText().toString();
             endDate = endDateBtn.getText().toString();
 
             // Check to see if startDate is before endDate / vice versa and assign variables and text accordingly
             try {
                 if (isValidDate(startDate, endDate)) {
-                    if (isAddNewVacation) {
-                        vacation = new Vacation(name, accommodations, startDate, endDate, description);
-                        try {
-                            repo.addVacation(vacation);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                    if (!name.isEmpty()) {
+                        if (isAddNewVacation) {
+                            vacation = new Vacation(name, accommodations, startDate, endDate, description);
+                            try {
+                                repo.addVacation(vacation);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            vacation.setName(name);
+                            vacation.setAccommodationName(accommodations);
+                            vacation.setDescription(description);
+                            vacation.setStartDate(startDate);
+                            vacation.setEndDate(endDate);
+                            try {
+                                repo.updateVacation(vacation);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                    } else {
-                        vacation.setName(name);
-                        vacation.setAccommodationName(accommodations);
-                        vacation.setDescription(description);
-                        vacation.setStartDate(startDate);
-                        vacation.setEndDate(endDate);
-                        try {
-                            repo.updateVacation(vacation);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        finish();
                     }
-                    finish();
+                    else {
+                        Toast.makeText(this, "Please enter a vacation name", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else {
                     Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
