@@ -29,4 +29,10 @@
     <string name="create_sample_data">Create Sample Data</string>
     <string name="validate_password">"Password must be at least eight characters long, contain one lower case letter, one upper case letter, one number, and one special character"</string>
     <string name="username_password_incorrect">Username/Password incorrect!</string>
+    <string name="report_title">Vacation Data Report</string>
+    <string name="date_created">Date Created: %1$s</string>
+    <string name="vacation_name_header">Vacation Name</string>
+    <string name="start_date_header">Start Date</string>
+    <string name="end_date_header">End Date</string>
+    <string name="accommodations_header">Accommodations</string>
 </resources>

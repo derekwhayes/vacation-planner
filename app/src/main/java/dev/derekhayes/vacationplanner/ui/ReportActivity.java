@@ -1,6 +1,8 @@
 package dev.derekhayes.vacationplanner.ui;
 
 import android.os.Bundle;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import dev.derekhayes.vacationplanner.R;
 import dev.derekhayes.vacationplanner.database.VacationRepository;
@@ -30,6 +40,17 @@ public class ReportActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        // set the timestamp
+        String timestamp;
+        TextView createDate = findViewById(R.id.timestamp);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US);
+        LocalDateTime now = LocalDateTime.now();
+        timestamp = dtf.format(now);
+
+        String dateCreatedText = String.format(getResources().getString(R.string.date_created), timestamp);
+        createDate.setText(dateCreatedText);
 
         RecyclerView recyclerView = findViewById(R.id.report_recycler_view);
         VacationRepository repo = new VacationRepository(getApplication());
