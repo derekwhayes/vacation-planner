@@ -25,4 +25,6 @@
     <string name="log_in">Log In</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_sample_data">Create Sample Data</string>
 </resources>

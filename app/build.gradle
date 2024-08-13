@@ -36,7 +36,8 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.room.runtime
     implementation libs.recyclerview
-    implementation 'com.github.evrencoskun:TableView:v0.8.9.4'
+    implementation libs.tableview
+    implementation libs.security.crypto.ktx
     annotationProcessor libs.room.compiler
     androidTestAnnotationProcessor libs.room.testing
     testImplementation libs.junit
