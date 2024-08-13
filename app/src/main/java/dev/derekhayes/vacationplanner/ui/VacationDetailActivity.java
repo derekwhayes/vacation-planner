@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -139,7 +138,6 @@ public class VacationDetailActivity extends AppCompatActivity {
         else if (item.getItemId() == R.id.edit) {
             Intent intent = new Intent(this, EditVacationActivity.class);
             intent.putExtra("vacationId", id);
-            Log.d("TAG", "id: " + id);
             startActivity(intent);
             return true;
         }
@@ -251,8 +249,6 @@ public class VacationDetailActivity extends AppCompatActivity {
     private void createSampleDate() throws InterruptedException {
         repo = new VacationRepository(getApplication());
 
-        Log.d("MYTAG", "id: " + id);
-
         Excursion excursion = new Excursion("Go for a walk", "1/1/1999", "A long walk", id);
         repo.addExcursion(excursion);
         excursion = new Excursion("Take a nap", "1/1/1999", "A long nap", id);
@@ -270,7 +266,6 @@ public class VacationDetailActivity extends AppCompatActivity {
     public void addExcursion() {
         Intent intent = new Intent(this, EditExcursionActivity.class);
         intent.putExtra("vacationId", id);
-        Log.d("MYTAG", "vacationId in vacationDetail: " + id);
         startActivity(intent);
     }
 }

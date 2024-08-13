@@ -1,7 +1,6 @@
 package dev.derekhayes.vacationplanner.ui;
 
 import android.os.Bundle;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,14 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +34,6 @@ public class ReportActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         // set the timestamp
         String timestamp;

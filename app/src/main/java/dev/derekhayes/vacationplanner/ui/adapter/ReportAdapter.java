@@ -41,18 +41,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
             endDateItemView = itemView.findViewById(R.id.report_end_date_text);
             accommodationsItemView = itemView.findViewById(R.id.report_accommodations_text);
 
-//            itemView.setOnClickListener(view -> {
-//                int position = getBindingAdapterPosition();
-//                final Vacation current = vacations.get(position);
-//                Intent intent = new Intent(context, VacationDetailActivity.class)
-//                        .putExtra("id", current.getId())
-//                        .putExtra("name", current.getName())
-//                        .putExtra("accommodationName", current.getAccommodationName())
-//                        .putExtra("startDate", current.getStartDate())
-//                        .putExtra("endDate", current.getEndDate())
-//                        .putExtra("description", current.getDescription());
-//                context.startActivity(intent);
-//            });
         }
     }
 

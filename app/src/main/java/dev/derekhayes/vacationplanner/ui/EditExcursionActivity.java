@@ -51,8 +51,6 @@ public class EditExcursionActivity extends AppCompatActivity implements DatePick
 
         repo = new VacationRepository(getApplication());
 
-
-
         // set views
         nameTV = findViewById(R.id.edit_excursion_name);
         descriptionTV = findViewById(R.id.edit_excursion_description);
