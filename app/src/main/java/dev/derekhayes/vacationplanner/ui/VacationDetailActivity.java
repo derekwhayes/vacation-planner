@@ -87,7 +87,7 @@ public class VacationDetailActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("MYTAG", "starting onResume -- id: " + id);
+
         // set info from edited vacation
         try {
             Vacation vacation = repo.getVacation(id);
@@ -109,7 +109,6 @@ public class VacationDetailActivity extends AppCompatActivity {
 
     private void populateVacation() throws InterruptedException {
 
-        Log.d("MYTAG", "starting populateVacation() -- name: " + name);
         nameTV.setText(name);
         descriptionTV.setText(description);
         datesTV.setText(getResources().getString(R.string.vacation_dates, startDate, endDate));
@@ -238,7 +237,34 @@ public class VacationDetailActivity extends AppCompatActivity {
             mDialog.show();
             return true;
         }
+        else if (item.getItemId() == R.id.sample_excursions) {
+            try {
+                createSampleDate();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         return false;
+    }
+
+    private void createSampleDate() throws InterruptedException {
+        repo = new VacationRepository(getApplication());
+
+        Log.d("MYTAG", "id: " + id);
+
+        Excursion excursion = new Excursion("Go for a walk", "1/1/1999", "A long walk", id);
+        repo.addExcursion(excursion);
+        excursion = new Excursion("Take a nap", "1/1/1999", "A long nap", id);
+        repo.addExcursion(excursion);
+        excursion = new Excursion("Watch TV", "1/1/1999", "A lot of TV", id);
+        repo.addExcursion(excursion);
+        excursion = new Excursion("Read a book", "1/1/1999", "A long book", id);
+        repo.addExcursion(excursion);
+        excursion = new Excursion("Do work", "1/1/1999", "A lot of work", id);
+        repo.addExcursion(excursion);
+
+        populateVacation();
     }
 
     public void addExcursion() {

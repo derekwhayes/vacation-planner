@@ -24,4 +24,9 @@
         android:title="@string/delete"
         android:icon="@drawable/delete"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sample_excursions"
+        android:title="@string/create_sample_data"
+        app:showAsAction="never" />
 </menu>
