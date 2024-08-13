@@ -70,51 +70,73 @@ public class MainActivity extends AppCompatActivity {
 
         // set views
         startButton = findViewById(R.id.start_button);
+        usernameView = findViewById(R.id.username_input_edit);
+        passwordView = findViewById(R.id.password_input_edit);
 
         // check if no existing account
-        if (encryptedSharedPreferences.getString("username", "defaultUser").equals("defaultUser")) {
-            isNewAccount = true;
-            startButton.setText(R.string.create_account);
-        }
+        checkIfNewAccount();
 
         startButton.setOnClickListener(view -> onClickGetStarted());
 
     }
 
-    public void onClickGetStarted() {
-        usernameView = findViewById(R.id.username_input_edit);
-        passwordView = findViewById(R.id.password_input_edit);
-        TextView loginError = findViewById(R.id.login_error_text);
+    public void onResume() {
+        super.onResume();
+        findViewById(R.id.login_error_text).setVisibility(View.GONE);
+        usernameView.setText("");
+        passwordView.setText("");
+        usernameView.clearFocus();
+        passwordView.clearFocus();
+        checkIfNewAccount();
+    }
 
-        if (usernameView.length() > 0 && passwordView.length() > 0) {
-            username = usernameView.getText().toString().trim();
-            password = passwordView.getText().toString().trim();
-            Log.d("MYTAG", "username:" + username + ":end");
-        }
-
-        if (isNewAccount) {
-            if (validatePassword(password)) {
-                // set new username and password
-                SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.apply();
-
-                startActivity(new Intent(this, VacationListActivity.class));
-            }
-            else {
-                loginError.setText(R.string.validate_password);
-                loginError.setVisibility(View.VISIBLE);
-            }
-        }
-        else if (encryptedSharedPreferences.getString("username", "defaultUser")
-                .equals(username) && encryptedSharedPreferences.getString("password", "defaultPass").equals(password)) {
-
-            startActivity(new Intent(this, VacationListActivity.class));
+    private void checkIfNewAccount() {
+        if (encryptedSharedPreferences.getString("username", "defaultUser").equals("defaultUser")) {
+            isNewAccount = true;
+            startButton.setText(R.string.create_account);
         }
         else {
-            loginError.setVisibility(View.VISIBLE);
+            isNewAccount = false;
+            startButton.setText(R.string.log_in);
         }
+    }
+
+    public void onClickGetStarted() {
+
+        // TODO: Remove after debugging
+        startActivity(new Intent(this, VacationListActivity.class));
+
+//        TextView loginError = findViewById(R.id.login_error_text);
+//
+//        if (usernameView.length() > 0 && passwordView.length() > 0) {
+//            username = usernameView.getText().toString().trim();
+//            password = passwordView.getText().toString().trim();
+//            Log.d("MYTAG", "username:" + username + ":end");
+//        }
+//
+//        if (isNewAccount) {
+//            if (validatePassword(password)) {
+//                // set new username and password
+//                SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+//                editor.putString("username", username);
+//                editor.putString("password", password);
+//                editor.apply();
+//
+//                startActivity(new Intent(this, VacationListActivity.class));
+//            }
+//            else {
+//                loginError.setText(R.string.validate_password);
+//                loginError.setVisibility(View.VISIBLE);
+//            }
+//        }
+//        else if (encryptedSharedPreferences.getString("username", "defaultUser")
+//                .equals(username) && encryptedSharedPreferences.getString("password", "defaultPass").equals(password)) {
+//
+//            startActivity(new Intent(this, VacationListActivity.class));
+//        }
+//        else {
+//            loginError.setVisibility(View.VISIBLE);
+//        }
     }
 
     private boolean validatePassword(String password) {
