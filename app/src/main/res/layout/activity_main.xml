@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:textSize="20sp"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLength="30" />
 
     </com.google.android.material.textfield.TextInputLayout>
