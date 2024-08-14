@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validatePassword(String password) {
+    public boolean validatePassword(String password) {
 
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,20}$";
 
