@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "vacations")
 public class Vacation {
 
@@ -78,5 +80,18 @@ public class Vacation {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacation vacation = (Vacation) o;
+        return Objects.equals(name, vacation.name) && Objects.equals(accommodationName, vacation.accommodationName) && Objects.equals(startDate, vacation.startDate) && Objects.equals(endDate, vacation.endDate) && Objects.equals(description, vacation.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, accommodationName, startDate, endDate, description);
     }
 }
